@@ -1,4 +1,4 @@
-# Sublabel-Accurate Convex Relaxations (sublabel_relax) 
+# Sublabel-Accurate Convex Relaxations
 
 ## Installation
 
