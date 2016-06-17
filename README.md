@@ -3,7 +3,7 @@
 ## Installation
 To run the code, first install the convex optimization framework [prost](https://github.com/tum-vision/prost) following the instructions presented there. 
 
-It is required to add some additional proximal and linear operators to `prost`. To do so, create the file `CustomSources.cmake` in the directory `prost/cmake/` with the following contents:
+It is required to add some additional proximal and linear operators to [prost](https://github.com/tum-vision/prost). To do so, create the file `CustomSources.cmake` in the directory `prost/cmake/` with the following contents:
 
 ```
 set(PROST_CUSTOM_SOURCES
@@ -76,7 +76,7 @@ Reached convergence tolerance.
 Elapsed time is 24.236633 seconds.
 ```
 
-![alt text](https://github.com/tum-vision/sublabel_relax/raw/master/images/stereo_result.png "Expected output for 4 labels.")
+![Sublabel stereo result](https://github.com/tum-vision/sublabel_relax/raw/master/cvpr2016/images/stereo_result.png)
 
 ## Publications
 
