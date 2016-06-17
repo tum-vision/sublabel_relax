@@ -56,7 +56,7 @@ The code for reproducing individual numerical experiments from the [paper](https
   * `stereo_baseline.m` Baseline approach for stereo matching
   * `stereo_sublabel.m` Sublabel-accurate approach
   
-Running the sublabel-stereo experiment (with `L=4`) should then produce the following expected output
+Running the sublabel-stereo experiment with 4 labels should then produce the following expected output
 ``` 
 >> stereo_sublabel
 [compute_convex_conjugate] Total number of slopes: 5025269
