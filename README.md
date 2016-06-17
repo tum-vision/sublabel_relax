@@ -23,7 +23,7 @@ set(MATLAB_CUSTOM_SOURCES
 
 Replace `"relative_path_to_sublabel_relax"` with the relative path to go from the directory `prost/cmake` to the directory where you cloned this repository into (e.g., `../../sublabel_relax`).
 
-After adding this file, recompile `prost` again, e.g., run in the directory `prost/build`
+After adding this file, recompile prost again, e.g., run in the directory `prost/build`
 ```
 cmake ..
 make -j16
