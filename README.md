@@ -85,3 +85,7 @@ The following publications describe the approach:
  *   **Sublabel-Accurate Relaxation of Nonconvex Energies**
      (T. Möllenhoff, E. Laude, M. Moeller, J. Lellmann, D. Cremers),
      In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2016.
+
+ *   **Sublabel-Accurate Convex Relaxation of Vectorial Multilabel Energies**
+     (E. Laude, T. Möllenhoff, M. Moeller, J. Lellmann, D. Cremers),
+     In European Conference on Computer Vision and Pattern Recognition (ECCV), 2016.
