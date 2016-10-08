@@ -16,7 +16,6 @@ lmb = 1;
 
 cost_volume = stereo_cost(:, :, round(linspace(1, ndisps, L)));
 
-
 %% solve problem and display result
 u_unlifted = baseline_lifting(cost_volume, gamma, lmb);
 

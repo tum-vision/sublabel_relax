@@ -2,13 +2,13 @@
 
 %% read input image
 im = imread('images/24004.jpg');
-im = double(imresize(im, 1)) / 255;
+im = double(imresize(im, 0.1)) / 255;
 [ny, nx] = size(im);
 
 %% setup parameters
-L = 3;
+L = 4;
 gamma = linspace(0, 1, L)'; 
-lmb = 0.5;
+lmb = 0.1;
 N = ny * nx;
 
 %% compute piecewise quadratic approximation of dataterm
