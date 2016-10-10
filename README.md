@@ -34,7 +34,7 @@ make -j16
 
 
 ## One-dimensional ranges (CVPR16)
-Further instructions for reproducing the individual numerical experiments from the papers[Sublabel-Accurate Relaxation of Nonconvex Energies](https://vision.in.tum.de/_media/spezial/bib/moellenhoff_laude_cvpr_16.pdf) can be found [here](CVPR16/README.md).
+Further instructions for reproducing the individual numerical experiments from the paper [Sublabel-Accurate Relaxation of Nonconvex Energies](https://vision.in.tum.de/_media/spezial/bib/moellenhoff_laude_cvpr_16.pdf) can be found [here](CVPR16/README.md).
 ## Multi-dimensional ranges (ECCV16)
 Further instructions for reproducing the individual numerical experiments from the paper [Sublabel-Accurate Convex Relaxation of Vectorial Multilabel Energies](https://vision.in.tum.de/_media/spezial/bib/laude16eccv.pdf) can be found [here](ECCV16/README.md).
 
