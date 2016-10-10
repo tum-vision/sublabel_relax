@@ -1,5 +1,5 @@
-function [result] = unlifted_rof(f, lambda)
-% implementation of the classical ROF model with nuclear norm TV
+function [result] = solve_direct_rof_nd(f, lambda)
+%SOLVE_DIRECT_ROF_ND Implementation of the classical ROF model with nuclear norm TV
 %
 % min_u (1/2) (u-f)^2 + \lambda |\nabla u|_*
 %

@@ -1,6 +1,9 @@
 function [Nabla] = spmat_gradient2d(ny, nx, nc)
-%SPMAT_GRADIENT2D Summary of this function goes here
-%   Detailed explanation goes here
+%SPMAT_GRADIENT2D Computes a finite difference Jacobian operator for a 
+%   color image with nc color channels.
+%   ny width of the image
+%   nx height of the image
+%   nc number of color channels.
     e = ones(ny, 1);
     A = spdiags([-e e], 0:1, ny, ny);
     A(end, end) = 0;

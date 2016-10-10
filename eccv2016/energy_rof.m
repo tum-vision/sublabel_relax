@@ -1,6 +1,6 @@
 function [E] = energy_rof(u, f, lambda)
-%ENERGY_ROF_3D Summary of this function goes here
-%   Detailed explanation goes here
+%ENERGY_ROF Computes the energy of the classical ROF model with nuclear norm TV
+% min_u (1/2) (u-f)^2 + \lambda |\nabla u|_* 
     [ny, nx, nc] = size(f);
     E = 0.5 * sum((u(:) - f(:)).^2);
     Nabla = spmat_gradient2d(ny, nx, nc);

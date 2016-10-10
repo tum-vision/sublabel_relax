@@ -1,6 +1,7 @@
 function [vert, tri] = triang2d_box(t)
-%GET_TRIANGULATION_BOX Summary of this function goes here
-%   Detailed explanation goes here
+%TRIANG2D_BOX Computes a triangulation of a 2d box
+%   t is a vector of length l that contains the labels in x, y direction 
+%   all elements in t x t correspond to a vertex of the triangulation
     
     l = size(t, 2);
     L = l*l;

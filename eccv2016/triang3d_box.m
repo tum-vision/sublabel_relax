@@ -1,7 +1,8 @@
 function [vert, tri] = triang3d_box(t)
-%GET_TRIANGULATION_BOX Summary of this function goes here
-%   Detailed explanation goes here
-
+%TRIANG3D_BOX Computes a triangulation of a 3d box
+%   t is a vector of length l that contains the labels in x, y direction 
+%   all elements in t x t x t correspond to a vertex of the triangulation
+  
     l = size(t, 2);
     L = l*l*l;
     vert = [repmat([reshape(repmat(t, l, 1), l^2, 1), repmat(t, 1, l)'], l, 1), reshape(repmat(t, l^2, 1), L, 1)];

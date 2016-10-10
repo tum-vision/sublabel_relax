@@ -1,6 +1,15 @@
 function [u_proj, u_lifted] = solve_sublabel_nd(vert, tri, ny, nx, mode, lambda, data)
-%LINOP_SUBLABEL_ND Summary of this function goes here
-%   Detailed explanation goes here
+%SOLVE_SUBLABEL_ND Solves the sublabel accurate relaxation for a given data
+%term
+%   vert, tri - triangulation of the range
+%   ny, nx - height, width of the domain
+%   mode - specifies the class of dataterms that are used. Possible modes are: 
+%          quad => convex quadratic pieces
+%          quad_trunc => possibly nonconvex pieces of a truncated quadratic 
+%                                          energy (automatically convexified)
+%          polyhed => convex polyhedral pieces
+%   lambda: regularization parameter
+%   data: struct, dataterm, fields depends on mode
 
     %%
     % Linear operator for data term
@@ -40,6 +49,7 @@ function [u_proj, u_lifted] = solve_sublabel_nd(vert, tri, ny, nx, mode, lambda,
         AtQ = cat(1, AtQ, AtQ_cell{d, 1});
     end
     
+    % Linear operators for the regularizer
     W_cell = cell(n, 1);
     for d=1:n
         W_cell{d, 1} = sparse(0, L);
@@ -109,29 +119,24 @@ function [u_proj, u_lifted] = solve_sublabel_nd(vert, tri, ny, nx, mode, lambda,
         
         problem = prost.min_max_problem({u, m, o, x, y, w, t, w_tilde}, ...
                                         {v, q, rs, ab, c, d, p_tilde, r_tilde});
+                                    
+        % <r, t^{i_j}> <= s for all vertices t^{i_j} for all triangles Delta_i
+        problem.add_dual_pair(t, r, prost.block.sparse_kron_id(X', N));
+        problem.add_dual_pair(t, s, prost.block.sparse_kron_id(-Y', N));
+        
+        problem.add_function(t, prost.function.sum_1d('ind_leq0', 1,0,1,-data.nu,0));
     elseif(strcmp(mode, 'quad'))
         problem = prost.min_max_problem({u, m, o, x, y, w, w_tilde}, ...
                                         {v, q, rs, ab, c, d, p_tilde, r_tilde});
     elseif(strcmp(mode, 'polyhed'))
         problem = prost.min_max_problem({u, m, o, w_tilde}, ...
                                         {v, q, rs, p_tilde, r_tilde});
+        problem.add_function(rs, sum_ind_epi_polyhedral(n+1, false, data.pts_x, data.pts_y, ...
+                                                 data.counts, data.index));
     else
         error('Warning: Unrecognized mode.');
     end
     
-
-    problem.add_dual_pair(u, v, prost.block.identity());
-
-    % r = A^T * Q * v
-    problem.add_dual_pair(m, v, prost.block.sparse_kron_id(AtQ', N));
-    problem.add_dual_pair(m, r, prost.block.identity(-1));
-
-    % s = q - b^T * Q * v
-    problem.add_dual_pair(o, v, prost.block.sparse_kron_id(-btQ', N));
-    Z = sparse(ones(T, 1));
-    problem.add_dual_pair(o, q, prost.block.sparse_kron_id(Z', N));
-    problem.add_dual_pair(o, s, prost.block.identity(-1));
-
     if(strcmp(mode, 'quad') || strcmp(mode, 'quad_trunc'))
         % a + c = r
         problem.add_dual_pair(x, r, prost.block.identity(-1));
@@ -160,26 +165,27 @@ function [u_proj, u_lifted] = solve_sublabel_nd(vert, tri, ny, nx, mode, lambda,
         coeffs_c=0;
 
         problem.add_function(ab, prost.function.sum_ind_epi_quad(n+1, false, coeffs_a, coeffs_b, coeffs_c));
-
-    elseif(strcmp(mode, 'polyhed'))
-        problem.add_function(rs, sum_ind_epi_polyhedral(n+1, false, data.pts_x, data.pts_y, ...
-                                                 data.counts, data.index));
     end
     
-    if(strcmp(mode, 'quad_trunc'))
-        % <r, t^{i_j}> <= s for all vertices t^{i_j} for all triangles Delta_i
-        problem.add_dual_pair(t, r, prost.block.sparse_kron_id(X', N));
-        problem.add_dual_pair(t, s, prost.block.sparse_kron_id(-Y', N));
-        
-        problem.add_function(t, prost.function.sum_1d('ind_leq0', 1,0,1,-data.nu,0));
-    end
+    problem.add_dual_pair(u, v, prost.block.identity());
 
+    % r = A^T * Q * v
+    problem.add_dual_pair(m, v, prost.block.sparse_kron_id(AtQ', N));
+    problem.add_dual_pair(m, r, prost.block.identity(-1));
+
+    % s = q - b^T * Q * v
+    problem.add_dual_pair(o, v, prost.block.sparse_kron_id(-btQ', N));
+    Z = sparse(ones(T, 1));
+    problem.add_dual_pair(o, q, prost.block.sparse_kron_id(Z', N));
+    problem.add_dual_pair(o, s, prost.block.identity(-1));
+
+    problem.add_function(q, prost.function.sum_1d('zero', 1,0,1,1,0));
+    
+    % add functions and pairings for the regularizer
     problem.add_dual_pair(u, p_tilde, prost.block.gradient2d(nx, ny, L, false));
     problem.add_dual_pair(w_tilde, p_tilde, prost.block.sparse_kron_id(W', N));
     problem.add_dual_pair(w_tilde, r_tilde, prost.block.identity());
 
-    
-    problem.add_function(q, prost.function.sum_1d('zero', 1,0,1,1,0));
     problem.add_function(r_tilde, prost.function.conjugate(prost.function.sum_singular_nx2(n*2, false, 'sum_1d:abs', ...          
                                                       lambda, 0, 1, 0, 0)));
 

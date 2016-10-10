@@ -1,6 +1,8 @@
 # Sublabel-Accurate Relaxation of Nonconvex Energies (CVPR16)
 
 ## Installation
+Install prost as described [here](https://github.com/tum-vision/sublabel_relax/blob/master/README.md).
+
 Before running the MATLAB scripts the mex-File for computing convex envelopes has to be compiled. In the directory of this repository, run from within MATLAB the following command:
 ```
 mex compute_convex_conjugate.cpp
@@ -49,5 +51,15 @@ Elapsed time is 24.236633 seconds.
 ```
 
 ![Sublabel stereo result](https://github.com/tum-vision/sublabel_relax/raw/master/cvpr2016/images/stereo_result.png)
+
+## Publications
+ *   **Sublabel-Accurate Relaxation of Nonconvex Energies**
+     (T. Möllenhoff, E. Laude, M. Moeller, J. Lellmann, D. Cremers),
+     In IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2016.
+
+ *   **Sublabel-Accurate Convex Relaxation of Vectorial Multilabel Energies**
+     (E. Laude, T. Möllenhoff, M. Moeller, J. Lellmann, D. Cremers),
+     In European Conference on Computer Vision and Pattern Recognition (ECCV), 2016.
+
 
 

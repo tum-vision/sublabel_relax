@@ -234,6 +234,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
     std::vector<double> sublabels;
     std::vector<double> cost;
     
+    std::cout << "Convexifiying data... ";
+    std::cout.flush();
+    
     // loop over all squares
     for(size_t k = 0; k < l-1; k++) {
 
@@ -302,7 +305,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
             }
         }
     }
-   
+    std::cout << " done!\n";
+    
     // sublabels
     plhs[4] = mxCreateDoubleMatrix(sublabels.size(), 1, mxREAL);
     double *pts_x = (double*)mxGetPr(plhs[4]);

@@ -37,21 +37,25 @@ n = 3;
 % vert = [0 0 0; 3 0 0; 0 0 3; 0 3 0];
 % tri = [1 2 3 4];
 
-l = 2;
+l = 4;
 t=linspace(0, F_MAX, l);
 [vert, tri] = triang3d_box(t);
 L = size(vert, 1);
 T = size(tri, 1);
 
-data.f = f_noisy;
-data.nu = nu;
-[u_proj, u_lifted] = solve_sublabel_nd(vert, tri, ny, nx, 'quad_trunc', lambda, data);
+
+dataterm = zeros(ny, nx, l, l, l);
+
+for i=1:ny
+    for j=1:nx
+        dataterm(i, j, :) = min(nu, 0.5*sum((repmat(squeeze(f_noisy(i,j,:))', L, 1)-vert).^2, 2));
+    end
+end
+
+data.f = dataterm;
+[u_proj, ~] = solve_baseline_nd(vert, tri, ny, nx, lambda, data);
 
 %%
-% display a sparsity plot
-ucounts = squeeze(sum(reshape(u_lifted, [ny, nx, L]) > 1e-3, 3));
-figure; imagesc(ucounts); colorbar;
-
 % show result and compute energy
 figure;
 imshow(u_proj, []);
@@ -67,4 +71,4 @@ for i=1:ny
     end
 end
 
-fprintf('\nEnergy (unlifted): %f\n\n', E);
+['    energy (unlifted): ', num2str(E)]
