@@ -9,13 +9,14 @@ addpath('~/Documents/Projects/prost/matlab')
 ```
 from within MATLAB.
 
-For optical flow you need to compile the file `compute_cost_flow_piecw_conv.cpp` that first computes the optical flow matching cost given a pair of images and second, convexifies the cost on each triangle. To compile execute the command within MATLAB:
+For optical flow you need to compile the file `compute_cost_flow_piecw_conv.cpp` that first computes the optical flow matching cost given a pair of images and second, convexifies the cost on each triangle. To compile execute the command
 ```
 mex compute_cost_flow_piecw_conv.cpp quickhull/QuickHull.cpp
 ```
+from within MATLAB.
 The code uses the Quickhull algorithm to compute convex hulls of three-dimensional point-clouds. The implementation is borrowed from [https://github.com/akuukka/quickhull](https://github.com/akuukka/quickhull).
 
-For visualization of the optical flow results you need to download the [flow-code-matlab.zip](http://vision.middlebury.edu/flow/code/flow-code-matlab.zip). Extraxt the content and add the folder to your path via
+For visualization of the optical flow results you need to download the file [flow-code-matlab.zip](http://vision.middlebury.edu/flow/code/flow-code-matlab.zip). Extraxt the content and add the folder to your path via the command
 ```
 addpath('~/flow-code-matlab')
 ```
